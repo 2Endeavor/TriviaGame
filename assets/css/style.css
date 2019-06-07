@@ -1,0 +1,25 @@
+.display-4{
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: blue;
+
+}
+.container{
+  width: 80vw;
+  height: 90vh;
+  border: black,10px,solid;
+}
+#timer{
+  text-align: center;
+}
+#questionBox{
+  text-align: center;
+}
+#clever{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 25px;
+}
+.btn{
+  margin-left: 80vw;
+}
