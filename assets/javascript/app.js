@@ -13,6 +13,7 @@ $(document).ready(function () {
   var rightAns;
   //variable to track number of unanswered questions
   var unAnswered;
+  //Variable to 
   var timeRemaining;
 
   // create an array of objects for the questions and answers
@@ -23,14 +24,16 @@ $(document).ready(function () {
 
   // =============Set up Listeners==================
   // listener for the submit button-this will submit the page of questions
+  
   //listener for start quiz
+  
+  // listens for the stop button to be clicked. This will stop the clock and call the evaluation funciton
+   $("#stop").on("click", function results() {
+  });
 
   // =========Functions==========  
-      //This function will load the page
- 
-  // $("#start").on("click", function () {
     
-  // });
+
  // function pageLoader();
   for (i = 0; i < questions.length; i++) {
     questions;
@@ -40,7 +43,6 @@ $(document).ready(function () {
     var newQuestion = $("<div id=clever>");
     var radioAnswerTrue = $(`<input class=true value=true name=identifier${i} type= radio >True<br>`);
     var radioAnswerFalse = $(`<input class=false value=false name=identifier${i} type= radio>False<br>`);
-
 
   // Put the divs and the radio buttons on the screen
   newQuestion.text(questions[i].question);
@@ -54,80 +56,66 @@ $(document).ready(function () {
 
 
 
-
   //  ============FUNCTIONS that need to be written==============
 
-  // function submit() this funciton will be called when the submit button is clicked. The function will stop the timer, clear the screen and call a function that reports the results
-
-  // function TextUpdate () this funciton will call all the functions that update the screen with values
-
-  // function results()  This function will create an array where the elements are the questions answered incorrectly. This function will also track the number of questions answered incorrectly
-
   // start game function-call necessary functions
-  // pageLoader();
-  // listens for the button to be clicked
-  $("#stop").on("click", function () {
-  console.log("I've been clicked :/");
-  $("#questionBox").empty();
-  //clear the screen
-  //Tell the student their score
+    // when the start button is clicked, the pageLoader() and countDown() will be called
 
-});
-
-
-
-
-
-
-
-
-// function evaluateSubmission ()
-//create listeners to know what has been selected.  // Count down timer
-  // Start on click.
-//var selectedAnswer
-
-
-
-
-
-  //  function countdown()
-    // use the span with #timer to attach the clock function
-    // set a variable hold the timeremaining
-    //create a function that will decrement the timer by 1 every time it's called
-    // create the timer face with starting time of 30 seconds
+//function countdown()
+      // use the span with #timer to attach the clock function
+      // set a variable to hold the timeremaining
+      //create a function that will decrement the timer by 1 every time it's called
+      // create the timer face with starting time of 30 seconds
     
-    // for (var i = 30; i > 0; i--) {
-    //   countDown = i
-    //   setTimeout(countdownTimer(i), 1000);
-    //   //console.log(countDown);
+        // for (var i = 30; i > 0; i--) {
+        //   countDown = i
+        //   setTimeout(countdownTimer(i), 1000);
+        //   //console.log(countDown);
       
-    // }
+        // }
     // function countdownTimer(countDown){
     //   $("#timer").text(`${countDown} seconds`);
 
     // }
 
     // Count down timer
-      // Start on click.
+      // Start on click.    
+
+// function evaluateSubmission () will evaluate answers selected. This  function will call on the results() function
+    //create listeners to know what has been selected.  
 
 
-  //Function to evaluate if answer provided is correct
-    // comparet the correct answer to the answer provided
-    // if answer is correct increment correctanswer counter
-    // if answer is wrong, increment wrong answer counter
+  // function results()  This function will create an array where the elements are the questions answered incorrectly. This function will also track the number of questions answered incorrectly
 
-    // Add boot strap progress bar
+  // function submit() this funciton will be called when the submit button is clicked. The function will stop the timer, clear the screen and call a function that reports the results
+ 
+ 
+  function results() {
+    //will provide test results
+       // clear the board of all the questions
+       //create 4 divs for the following:
+           //All Done!
+           //Correct Answers:
+           //Incorrect Answers:
+           //Unanswered: 
+           console.log(" The stop button has been clicked");
 
-  // Function to provide test results
-    // clear the board of all the questions
-    //create 4 divs for the following:
-        //All Done!
-        //Correct Answers:
-        //Incorrect Answers:
-        //Unanswered: 
 
 
 
+
+
+
+
+  
+
+
+
+
+
+  
+  }
+   
 
 
 });
