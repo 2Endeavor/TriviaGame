@@ -5,6 +5,17 @@
   color: blue;
 
 }
+#timer{
+  width: 100vw;
+  height: 10vw;
+  background-color: green;
+  text-align: center;
+  color: white;
+  padding-top: 15px;
+  font-size: 40px;
+  
+  
+}
 .container{
   width: 80vw;
   height: 90vh;

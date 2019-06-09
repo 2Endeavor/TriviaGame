@@ -1,5 +1,7 @@
 
 $(document).ready(function () {
+
+
   // ===========GLOBAL VARIABLES==============
 
   // Create Array of objects that contain questions and answers
@@ -27,10 +29,8 @@ $(document).ready(function () {
   
   // listens for the stop button to be clicked. This will stop the clock and call the evaluation funciton
    $("#stop").on("click", function() {
-     $("#question-stuff").hide();
-     $("results").show();
-    //  $("container").empty();
-    //  $(".btn").empty();
+     $("container").empty();
+     $(".btn").empty();
 
   });
 
@@ -109,7 +109,25 @@ $(document).ready(function () {
   // function results()  This function will create an array where the elements are the questions answered incorrectly. This function will also track the number of questions answered incorrectly
 
   // function submit() this funciton will be called when the submit button is clicked. The function will stop the timer, clear the screen and call a function that reports the results
+ 
+ 
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+   
 
 
 });
-
