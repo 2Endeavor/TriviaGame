@@ -1,115 +1,114 @@
+// i got lost and i just had to start a new file and copy paste it all in to make sense of where i was wrong
 
 $(document).ready(function () {
-  // ===========GLOBAL VARIABLES==============
-
-  // Create Array of objects that contain questions and answers
-  var questions = [];
-  //variable to track number of wrong answers
-  var wrongAns;
-
-  //Variable to track number of correct answers
-  var rightAns;
-  //variable to track number of unanswered questions
-  var unAnswered;
-  //Variable to 
-  var timeRemaining;
-
-  // create an array of objects for the questions and answers
-  questions.push({ question: "this is the question at index 0", correctAnswer: true });
-  questions.push({ question: "this is question at index 1", correctAnswer: false });
-  questions.push({ question: "this is the quesiton at index 2", correctAnswer: true });
-  questions.push({ question: "this is the quesiton at index 3", correctAnswer: false });
-
-  // =============Set up Listeners==================
-  // listener for the submit button-this will submit the page of questions
-  
-  //listener for start quiz
-  
-  // listens for the stop button to be clicked. This will stop the clock and call the evaluation funciton
-   $("#stop").on("click", function() {
-     $("#question-stuff").hide();
-     $("results").show();
-    //  $("container").empty();
-    //  $(".btn").empty();
-
-  });
-
-  // =========Functions==========  
+    // variables 
+    var questions = [];
+    var timeRemaining = 30;
     
-
- // function pageLoader();
-  for (i = 0; i < questions.length; i++) {
-    questions;
-    // create a div with a class to hold the true false questions
-    identifier = i;
-
-    var newQuestion = $("<div id=clever>");
-    var radioAnswerTrue = $(`<input class=true value=true name=identifier${i} type= radio >True<br>`);
-    var radioAnswerFalse = $(`<input class=false value=false name=identifier${i} type= radio>False<br>`);
-
-  // Put the divs and the radio buttons on the screen
-  newQuestion.text(questions[i].question);
-  newQuestion
-  $("#questionBox").append(newQuestion);
-  $("#questionBox").append(radioAnswerTrue);
-  $("#questionBox").append(radioAnswerFalse);
-
-}
-
-//  function results() {
-// //   //will provide test results
-// //      // clear the board of all the questions
-// //      //create 4 divs for the following:
-// //          //All Done!
-// //          //Correct Answers:
-// //          //Incorrect Answers:
-// //          //Unanswered: 
-//      console.log(" The stop button has been clicked");
-
-// //     }
-
-
-  //  ============FUNCTIONS that need to be written==============
-
-  // start game function-call necessary functions
-    // when the start button is clicked, the pageLoader() and countDown() will be called
-
-//function countdown() runs the countdown timer
-    // set number counter to 30
-    var number = 30;
-    //Number that will hold interval ID when "run" function is executed
+    // this is the result of the "setInterval" function. We need this number to stop the interval when the game is done
     var intervalId;
-    // The function countDown rens the decrement function once a second
-    function countDown(){
-      clearInterval(intervalId);
-      intervalId = setInterval(decrement, 1000);
+
+    // functions
+
+    // This creates the questiosn that the user will answer
+    function populateQuestionArray() {
+        questions.push({ question: "Admiral Hopper was adverse to change?", correctAnswer: false });
+        questions.push({ question: 'The first computer "bug" was a moth that kept the code from running?', correctAnswer: true });
+        questions.push({ question: "The person who wrote COBAL has a US Navy ship named for them?", correctAnswer: true });
+        questions.push({ question: "Admiral Hopper was the grandfather of computer programing?", correctAnswer: false });
+        questions.push({ question: 'Eleven inches wire representes  the distance a signal travels in one nanosecond?', correctAnswer: true });
     }
-    // Decrement function decreases the number by 1
-    function decrement(){
-      number--;
-      console.log(number);
-      //show number in the timer tag
-      $("#timer").html(`<h2>${number}</h2>`);
-      // once number hits zero run stop function
-      if (number===0){
-        stop();
-      }
 
+    // Based on the question array this will create some html elements on the page
+    function createQuestionElements() {
+        for (i = 0; i < questions.length; i++) {
+            // create a div with a class to hold the true false questions
+            var newQuestion = $(`<div id="question-${i}">`);
+
+            var radioAnswerTrue = $(`<input class=true value=true id="${i}-true" name="${i}" type= radio >True<br>`);
+            var radioAnswerFalse = $(`<input class=false value=false id="${i}-false" name="${i}" type= radio>False<br>`);
+
+            // Put the divs and the radio buttons on the screen
+            newQuestion.text(questions[i].question);
+            $("#questionBox").append(newQuestion);          
+            $("#questionBox").append(radioAnswerTrue);
+            $("#questionBox").append(radioAnswerFalse);
+
+            $(`#${i}-true`).on('click', function(event) {
+                handleItemClick(event.currentTarget.id, true);
+            });
+
+            $(`#${i}-false`).on('click', function(event) {
+                handleItemClick(event.currentTarget.id, false);
+            });
+        }
     }
-    // The stop function
-    function stop(){
-      clearInterval(intervalId);
+
+    function handleItemClick(htmlElementId, wordInButtonTheyClickOn) {
+        // id looks like: 0-true or 0-false
+        var index = parseInt(htmlElementId);
+        // get the question from the questions array,
+        var currentQuestion = questions[index];
+        // compare that answer with the value they provided (wordInButtonTheyClickOn)
+        if (currentQuestion.correctAnswer === wordInButtonTheyClickOn) {
+            currentQuestion.isCorrect = true;
+        } else {
+            currentQuestion.isCorrect = false;
+        }
     }
-      
 
-// function evaluateSubmission () will evaluate answers selected. This  function will call on the results() function
-    //create listeners to know what has been selected.  
+    // Registers a click event close the game and show the results page to the user
+    function createStopGameEvent() {
+        $("#stop").on("click", resolveGame);
+    }
 
+    // This is a function that will determine if the game is over (because of time)
+    function decrement() { 
+        timeRemaining--;
+        //show number in the timer tag
+        $("#timer").html(`<h2>${timeRemaining}<br> Seconds Remaining</h2>`);
+        // once number hits zero run stop function
+        if (timeRemaining === 0){
+            resolveGame();
+        }
+    }
 
-  // function results()  This function will create an array where the elements are the questions answered incorrectly. This function will also track the number of questions answered incorrectly
+    // This will create the HTML elements to show the user the game results (and win/loss?)
+    function resolveGame() {
+        clearInterval(intervalId);
+        $("#question-stuff").hide();
+        $("#results").show();
+        $("#restart").show();
+        // show number of right
+        var rightAnswers = 0;
+        var wrongAnswers = 0;
+        var skipped = 0;
+        for(var i =0; i < questions.length; i++) {
+            if (questions[i].isCorrect === true) {
+                rightAnswers++;
+            } else if (questions[i].isCorrect === false) {
+                wrongAnswers++;
+            } else {
+                skipped++;
+            }
+        }
+        
+        $("#results").append(`<p>Questions correct:  ${rightAnswers}</p>`);
+        $("#results").append(`<p>Questions Incorrect:  ${wrongAnswers}</p>`);
+        $("#results").append(`<p>Questions Skipped:  ${skipped}</p>`);
+    }
 
-  // function submit() this funciton will be called when the submit button is clicked. The function will stop the timer, clear the screen and call a function that reports the results
+    // This function starts up the page
+    function initPage() {
+        $("#results").hide();
+        $("#question-stuff").show();
+            
+        populateQuestionArray();
+        createQuestionElements();
+        createStopGameEvent();
+        // Register a timer on the page to show the remaining time to the user
+        intervalId = setInterval(decrement, 1000);
+    }
 
-
+    initPage();
 });
-

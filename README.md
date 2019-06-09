@@ -1,5 +1,5 @@
 # TriviaGame
-Trivia game.
+
 This trivia game currently works!
 
 The timer allows the person 30 seconds to take the quiz. At the end of 30 seconds, the program automatically goes to a screen that shows the results of the exam.
